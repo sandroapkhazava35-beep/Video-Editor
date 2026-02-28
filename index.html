@@ -7,12 +7,40 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Video Editor</h1>
-    <div id="video-container">
-        <video id="video-player" controls>
-            <source src="video.mp4" type="video/mp4">
-        </video>
+    <h1>🎬 Video Editor</h1>
+    
+    <div class="container">
+        <div>
+            <h2>Upload Video</h2>
+            <input type="file" id="video-upload" accept="video/*">
+        </div>
+
+        <div id="video-container">
+            <video id="video-player" controls>
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="controls">
+            <button onclick="playVideo()">▶ Play</button>
+            <button onclick="pauseVideo()">⏸ Pause</button>
+            <button onclick="stopVideo()">⏹ Stop</button>
+            <button onclick="increaseVolume()">🔊 Volume +</button>
+            <button onclick="decreaseVolume()">🔉 Volume -</button>
+            <button onclick="muteVideo()">🔇 Mute</button>
+            <button onclick="changePlaybackSpeed()">⚡ Speed</button>
+            <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <button onclick="downloadVideo()">⬇ Download</button>
+        </div>
+
+        <div class="info">
+            <p><strong>Current Time:</strong> <span id="current-time">0:00</span></p>
+            <p><strong>Duration:</strong> <span id="duration">0:00</span></p>
+            <p><strong>Volume:</strong> <span id="volume-display">100%</span></p>
+            <p><strong>Playback Speed:</strong> <span id="speed-display">1x</span></p>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
