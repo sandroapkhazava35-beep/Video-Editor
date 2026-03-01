@@ -3,41 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Editor</title>
+    <title>CapCut - Video Editor</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>🎬 Video Editor</h1>
-    
-    <div class="container">
-        <div>
-            <h2>Upload Video</h2>
-            <input type="file" id="video-upload" accept="video/*">
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-film"></i>
+                <span>CapCut</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" id="new-project">New Project</button>
+                <button class="btn btn-primary" id="export-btn">Export</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Tools</h3>
+                    <ul class="tool-list">
+                        <li><a href="#" onclick="switchTool('cut')"><i class="fas fa-scissors"></i> Cut</a></li>
+                        <li><a href="#" onclick="switchTool('trim')"><i class="fas fa-crop"></i> Trim</a></li>
+                        <li><a href="#" onclick="switchTool('text')"><i class="fas fa-text"></i> Text</a></li>
+                        <li><a href="#" onclick="switchTool('filter')"><i class="fas fa-palette"></i> Filter</a></li>
+                        <li><a href="#" onclick="switchTool('effect')"><i class="fas fa-wand-magic-sparkles"></i> Effect</a></li>
+                        <li><a href="#" onclick="switchTool('music')"><i class="fas fa-music"></i> Music</a></li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Media</h3>
+                    <div class="upload-area" id="upload-area">
+                        <i class="fas fa-plus"></i>
+                        <p>Click to upload</p>
+                        <input type="file" id="video-upload" accept="video/*,image/*" multiple>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Editor Area -->
+            <div class="editor-main">
+                <!-- Canvas/Preview Area -->
+                <div class="canvas-area">
+                    <div class="preview-container">
+                        <video id="video-player" class="video-preview">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="playback-controls-overlay">
+                            <button class="play-btn" id="play-btn" onclick="togglePlay()">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Properties Panel -->
+                <div class="properties-panel">
+                    <div class="panel-header">
+                        <h3>Properties</h3>
+                    </div>
+                    <div class="properties-content" id="properties-content">
+                        <p>Select a clip to edit</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div id="video-container">
-            <video id="video-player" controls>
-                Your browser does not support the video tag.
-            </video>
-        </div>
+        <!-- Timeline -->
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <h3>Timeline</h3>
+                <div class="timeline-controls">
+                    <button class="timeline-btn" onclick="zoomIn()"><i class="fas fa-magnifying-glass-plus"></i></button>
+                    <button class="timeline-btn" onclick="zoomOut()"><i class="fas fa-magnifying-glass-minus"></i></button>
+                </div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-ruler" id="timeline-ruler"></div>
+                <div class="timeline-tracks" id="timeline-tracks">
+                    <div class="track" id="video-track">
+                        <div class="track-label">Video</div>
+                        <div class="track-content" id="video-track-content"></div>
+                    </div>
+                    <div class="track" id="audio-track">
+                        <div class="track-label">Audio</div>
+                        <div class="track-content" id="audio-track-content"></div>
+                    </div>
+                </div>
+                <div class="playhead" id="playhead"></div>
+            </div>
 
-        <div class="controls">
-            <button onclick="playVideo()">▶ Play</button>
-            <button onclick="pauseVideo()">⏸ Pause</button>
-            <button onclick="stopVideo()">⏹ Stop</button>
-            <button onclick="increaseVolume()">🔊 Volume +</button>
-            <button onclick="decreaseVolume()">🔉 Volume -</button>
-            <button onclick="muteVideo()">🔇 Mute</button>
-            <button onclick="changePlaybackSpeed()">⚡ Speed</button>
-            <button onclick="toggleFullscreen()">⛶ Fullscreen</button>
-            <button onclick="downloadVideo()">⬇ Download</button>
-        </div>
-
-        <div class="info">
-            <p><strong>Current Time:</strong> <span id="current-time">0:00</span></p>
-            <p><strong>Duration:</strong> <span id="duration">0:00</span></p>
-            <p><strong>Volume:</strong> <span id="volume-display">100%</span></p>
-            <p><strong>Playback Speed:</strong> <span id="speed-display">1x</span></p>
+            <!-- Transport Controls -->
+            <div class="transport-controls">
+                <button class="control-btn" onclick="rewindVideo()"><i class="fas fa-step-backward"></i></button>
+                <button class="control-btn play-pause" id="play-pause-btn" onclick="togglePlay()"><i class="fas fa-play"></i></button>
+                <button class="control-btn" onclick="fastForwardVideo()"><i class="fas fa-step-forward"></i></button>
+                <span class="time-display">
+                    <span id="current-time">0:00</span> / <span id="total-duration">0:00</span>
+                </span>
+                <input type="range" class="volume-slider" id="volume-slider" min="0" max="100" value="100" onchange="changeVolume(this.value)">
+            </div>
         </div>
     </div>
 
